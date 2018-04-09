@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { AfAuthProvider } from '../../providers/af-auth/af-auth';
+
+import { HomePage } from './../home/home';
+//import { SignupPage } from '../signup/signup';
 
 /**
  * Generated class for the LoginPage page.
@@ -15,11 +20,40 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class LoginPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  loginForm: FormGroup;
+  loginError: string;
+
+  constructor(
+    private navCtrl: NavController,
+    private afAuthService: AfAuthProvider,
+    fb: FormBuilder
+  ) {
+    this.loginForm = fb.group({
+      email: ['', Validators.compose([Validators.required, Validators.email])],
+      password: ['', Validators.compose([Validators.required, Validators.minLength(6)])]
+    });
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad LoginPage');
+  login() {
+    let data = this.loginForm.value;
+
+    if (!data.email) {
+      return;
+    }
+
+    let credentials = {
+      email: data.email,
+      password: data.password
+    };
+    this.afAuthService.signInWithEmail(credentials)
+      .then(
+        () => this.navCtrl.setRoot(HomePage),
+        error => this.loginError = error.message
+      );
+  }
+
+  signup() {
+    //this.navCtrl.push(SignupPage);
   }
 
 }

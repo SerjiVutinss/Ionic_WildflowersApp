@@ -1,14 +1,33 @@
 <ion-header>
-  <ion-navbar>
+  <ion-toolbar>
+    <button ion-button menuToggle right>
+      <ion-icon name="menu"></ion-icon>
+    </button>
     <ion-title>
-      Ionic Blank
+      My Firebase App
     </ion-title>
-  </ion-navbar>
+    <ion-buttons end>
+
+      <ion-item (click)="logout()" *ngIf="afAuthService.authenticated">
+        Log out
+      </ion-item>
+
+      <ion-item (click)="login()" *ngIf="!afAuthService.authenticated">
+        Log in
+      </ion-item>
+
+    </ion-buttons>
+  </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+<ion-content padding class="has-header main-content">
+  <ion-list>
+    <ion-item *ngIf="afAuthService.authenticated">
+      <ion-icon name="contact" item-left></ion-icon>
+      {{ afAuthService.getEmail() }}
+    </ion-item>
+  </ion-list>
+
+  HOME COMPONENT
+  <button (click)="openUserPage()">Go To User Page</button>
 </ion-content>
