@@ -2,6 +2,12 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AfAuthProvider } from '../../providers/af-auth/af-auth';
 
+// FormBuilder
+import { Validators, FormBuilder, FormGroup } from '@angular/forms';
+
+import { Storage } from '@ionic/storage';
+import { User } from '../../models/User';
+
 /**
  * Generated class for the UserPage page.
  *
@@ -16,18 +22,51 @@ import { AfAuthProvider } from '../../providers/af-auth/af-auth';
 })
 export class UserPage {
 
+  private userDetails: FormGroup;
+
+  private user: User;
+
   constructor(
     private navCtrl: NavController,
     private navParams: NavParams,
-    private afAuthService: AfAuthProvider
-  ) { }
+    private afAuthService: AfAuthProvider,
+    private storage: Storage,
+    private formBuilder: FormBuilder
+  ) { 
+    this.user = new User();
+    this.userDetails = this.formBuilder.group({
+      username: ['']
+    });
+  }
 
+  // a user must be logged in to access this page!
   ionViewCanEnter() {
     return this.afAuthService.authenticated;
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad UserPage');
+    this.user.email = this.afAuthService.getEmail();
+    this.getUserDetails();
+  }
+
+  getUserDetails() {
+    this.storage.get
+      (this.user.email)
+      .then((data) => {
+        if (data == null) {
+          console.log("User has no settings");
+        } else {
+          this.user.username = data.username;
+        }
+      })
+      .catch((err) => {
+        console.log("Error = " + err);
+      })
+  }
+
+  updateUserDetails() {
+    this.storage.set(this.user.email, { "username": this.user.username });
   }
 
 }

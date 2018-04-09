@@ -15,4 +15,21 @@
 
 <ion-content padding>
 
+
+  <!-- <form #form="ngForm" (ngSubmit)="updateUserDetails(form)" novalidate> -->
+
+    <ion-item>
+      <ion-label>User Details for:
+        <b>{{ user.email }}</b>
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-label><b>Username</b></ion-label>
+      <ion-input type="text" [(ngModel)]="user.username" ngControl="username"></ion-input>
+    </ion-item>
+
+    <button ion-button (click)="updateUserDetails()" block>Update</button>
+
+  <!-- </form> -->
 </ion-content>
