@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { AfAuthProvider } from '../../providers/af-auth/af-auth';
 
 /**
  * Generated class for the UserPage page.
@@ -15,7 +16,14 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class UserPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(
+    private navCtrl: NavController,
+    private navParams: NavParams,
+    private afAuthService: AfAuthProvider
+  ) { }
+
+  ionViewCanEnter() {
+    return this.afAuthService.authenticated;
   }
 
   ionViewDidLoad() {
