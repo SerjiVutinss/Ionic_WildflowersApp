@@ -10,7 +10,11 @@ import { HomePage } from '../pages/home/home';
 // Firebase + AngularFire
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuth } from 'angularfire2/auth';
+// Private Firebase configuration settings 
+//    - must be manually created, note in README.MD
 import { firebaseConfig } from '../firebase-config';
+// Custom AngularFire Authentication Provider
+import { AfAuthProvider } from '../providers/af-auth/af-auth';
 
 @NgModule({
   declarations: [
@@ -31,7 +35,8 @@ import { firebaseConfig } from '../firebase-config';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    AngularFireAuth
+    AngularFireAuth,
+    AfAuthProvider
   ]
 })
 export class AppModule {}
