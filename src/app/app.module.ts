@@ -8,6 +8,9 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 
+// Storage
+import { IonicStorageModule } from '@ionic/storage';
+
 // Firebase + AngularFire
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuth } from 'angularfire2/auth';
@@ -26,7 +29,11 @@ import { AfAuthProvider } from '../providers/af-auth/af-auth';
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    AngularFireModule.initializeApp(firebaseConfig.config)
+    AngularFireModule.initializeApp(firebaseConfig.config),
+    IonicStorageModule.forRoot({
+      name: '__app.db',
+      driverOrder: ['indexeddb', 'sqlite', 'websql']
+    })
   ],
   bootstrap: [IonicApp],
   entryComponents: [

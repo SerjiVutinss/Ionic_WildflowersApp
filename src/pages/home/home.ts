@@ -43,7 +43,21 @@ export class HomePage {
       });
       alert.present();
     }
+  }
 
+  openTestPage() {
+    //if (this.isAuthenticated()) {
+      // only navigate here if a user is logged in
+      this.navCtrl.push("TestPage");
+    // } else {
+    //   // otherwise, display an alert
+    //   let alert = this.alertCtrl.create({
+    //     title: 'Access denied!',
+    //     subTitle: 'You must be logged in!',
+    //     buttons: ['OK']
+    //   });
+    //   alert.present();
+    // }
   }
 
   // return true if a user is logged in
