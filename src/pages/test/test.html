@@ -25,4 +25,11 @@
 </ion-item>
 </ion-list>
 
+<ion-list *ngIf="flowers">
+  <h3>FLowers</h3>
+  <ion-item *ngFor="let f of flowers">
+    {{ f.commonName }}
+  </ion-item>
+  </ion-list>
+
 </ion-content>

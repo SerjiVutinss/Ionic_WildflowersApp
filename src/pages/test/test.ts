@@ -3,6 +3,9 @@ import { IonicPage } from 'ionic-angular';
 
 import { Storage } from '@ionic/storage';
 
+import { WildflowersProvider } from '../../providers/wildflowers/wildflowers';
+import { Observable } from 'rxjs/Observable';
+
 /**
  * Generated class for the TestPage page.
  *
@@ -21,9 +24,19 @@ export class TestPage {
 
   name: string;
 
+  flowers: any[];
+
+
   constructor(
-    private storage: Storage
+    private storage: Storage,
+    private wildflowerService: WildflowersProvider
   ) {
+
+    this.wildflowerService.get().subscribe(flowers => {
+      this.flowers = flowers,
+      null
+    });
+
   }
 
   ionViewDidLoad() {

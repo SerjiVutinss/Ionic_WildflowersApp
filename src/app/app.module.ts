@@ -12,13 +12,16 @@ import { LoginPage } from '../pages/login/login';
 import { IonicStorageModule } from '@ionic/storage';
 
 // Firebase + AngularFire
-import { AngularFireModule } from 'angularfire2';
+import { AngularFireModule,  } from 'angularfire2';
 import { AngularFireAuth } from 'angularfire2/auth';
 // Private Firebase configuration settings 
 //    - must be manually created, note in README.MD
 import { firebaseConfig } from '../firebase-config';
 // Custom AngularFire Authentication Provider
 import { AfAuthProvider } from '../providers/af-auth/af-auth';
+import { AngularFireDatabaseModule, AngularFireDatabase } from "angularfire2/database";
+import { WildflowersProvider } from '../providers/wildflowers/wildflowers';
+import { WildflowerImagesProvider } from '../providers/wildflower-images/wildflower-images';
 
 @NgModule({
   declarations: [
@@ -30,6 +33,7 @@ import { AfAuthProvider } from '../providers/af-auth/af-auth';
     BrowserModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(firebaseConfig.fire),
+    AngularFireDatabaseModule,
     IonicStorageModule.forRoot({
       name: '__app.db',
       driverOrder: ['indexeddb', 'sqlite', 'websql']
@@ -46,7 +50,9 @@ import { AfAuthProvider } from '../providers/af-auth/af-auth';
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     AngularFireAuth,
-    AfAuthProvider
+    AfAuthProvider,
+    WildflowersProvider,
+    WildflowerImagesProvider
   ]
 })
 export class AppModule { }
