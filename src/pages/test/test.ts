@@ -3,11 +3,14 @@ import { IonicPage } from 'ionic-angular';
 
 import { Storage } from '@ionic/storage';
 
-import { WildflowersProvider } from '../../providers/wildflowers/wildflowers';
-import { Observable } from 'rxjs/Observable';
+import { WildflowersProvider } from '../../providers/wildflowers';
+
+import { Wildflower } from '../../models';
 
 /**
  * Generated class for the TestPage page.
+ * 
+ *  Component Used for testing new functionality, e.g. providers, pipes, re-usable components, etc
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -24,7 +27,7 @@ export class TestPage {
 
   name: string;
 
-  flowers: any[];
+  flowers: Wildflower[];
 
 
   constructor(
@@ -32,7 +35,7 @@ export class TestPage {
     private wildflowerService: WildflowersProvider
   ) {
 
-    this.wildflowerService.get().subscribe(flowers => {
+    this.wildflowerService.getAll().subscribe(flowers => {
       this.flowers = flowers,
       null
     });

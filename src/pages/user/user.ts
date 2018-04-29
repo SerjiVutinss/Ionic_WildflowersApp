@@ -6,7 +6,7 @@ import { AfAuthProvider } from '../../providers/af-auth/af-auth';
 //import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 
 import { Storage } from '@ionic/storage';
-import { User } from '../../models/User';
+import { User } from '../../models';
 
 /**
  * Generated class for the UserPage page.

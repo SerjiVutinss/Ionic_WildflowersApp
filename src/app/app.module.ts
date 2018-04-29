@@ -12,22 +12,29 @@ import { LoginPage } from '../pages/login/login';
 import { IonicStorageModule } from '@ionic/storage';
 
 // Firebase + AngularFire
-import { AngularFireModule,  } from 'angularfire2';
+import { AngularFireModule, } from 'angularfire2';
 import { AngularFireAuth } from 'angularfire2/auth';
 // Private Firebase configuration settings 
 //    - must be manually created, note in README.MD
 import { firebaseConfig } from '../firebase-config';
 // Custom AngularFire Authentication Provider
 import { AfAuthProvider } from '../providers/af-auth/af-auth';
+// AngularFire Database Module and Provider
 import { AngularFireDatabaseModule, AngularFireDatabase } from "angularfire2/database";
-import { WildflowersProvider } from '../providers/wildflowers/wildflowers';
-import { WildflowerImagesProvider } from '../providers/wildflower-images/wildflower-images';
+// Custom Providers for AngularFire/Firebase data
+import { WildflowersProvider, WildflowerImagesProvider } from '../providers/wildflowers';
+import { WildflowerCardPage } from '../pages/wildflower-card/wildflower-card';
+import { WildflowerDetailPage } from '../pages/wildflower-detail/wildflower-detail';
+import { WildflowersPage } from '../pages/wildflowers/wildflowers';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    LoginPage
+    LoginPage,
+    WildflowersPage,
+    WildflowerCardPage,
+    WildflowerDetailPage
   ],
   imports: [
     BrowserModule,
@@ -43,7 +50,10 @@ import { WildflowerImagesProvider } from '../providers/wildflower-images/wildflo
   entryComponents: [
     MyApp,
     HomePage,
-    LoginPage
+    LoginPage,
+    WildflowersPage,
+    WildflowerCardPage,
+    WildflowerDetailPage
   ],
   providers: [
     StatusBar,
