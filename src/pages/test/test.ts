@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage } from 'ionic-angular';
 
 import { Storage } from '@ionic/storage';
 
@@ -22,8 +22,6 @@ export class TestPage {
   name: string;
 
   constructor(
-    private navCtrl: NavController,
-    private navParams: NavParams,
     private storage: Storage
   ) {
   }

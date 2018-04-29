@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage } from 'ionic-angular';
 import { AfAuthProvider } from '../../providers/af-auth/af-auth';
 
 // FormBuilder
@@ -25,8 +25,6 @@ export class UserPage {
   private user: User;
 
   constructor(
-    private navCtrl: NavController,
-    private navParams: NavParams,
     private afAuthService: AfAuthProvider,
     private storage: Storage
   ) {
