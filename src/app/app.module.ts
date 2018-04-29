@@ -29,7 +29,7 @@ import { AfAuthProvider } from '../providers/af-auth/af-auth';
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    AngularFireModule.initializeApp(firebaseConfig.config),
+    AngularFireModule.initializeApp(firebaseConfig.fire),
     IonicStorageModule.forRoot({
       name: '__app.db',
       driverOrder: ['indexeddb', 'sqlite', 'websql']

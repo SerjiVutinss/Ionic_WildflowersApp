@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AfAuthProvider } from '../../providers/af-auth/af-auth';
 
 // FormBuilder
-import { Validators, FormBuilder, FormGroup } from '@angular/forms';
+//import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 
 import { Storage } from '@ionic/storage';
 import { User } from '../../models/User';
@@ -22,21 +22,15 @@ import { User } from '../../models/User';
 })
 export class UserPage {
 
-  private userDetails: FormGroup;
-
   private user: User;
 
   constructor(
     private navCtrl: NavController,
     private navParams: NavParams,
     private afAuthService: AfAuthProvider,
-    private storage: Storage,
-    private formBuilder: FormBuilder
-  ) { 
+    private storage: Storage
+  ) {
     this.user = new User();
-    this.userDetails = this.formBuilder.group({
-      username: ['']
-    });
   }
 
   // a user must be logged in to access this page!
