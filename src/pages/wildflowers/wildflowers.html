@@ -39,7 +39,7 @@
 
   <ion-row class="card-grid" *ngFor="let row of grid">
     <ion-col col-sm *ngFor="let f of row">
-      <page-wildflower-card [wildflower]="f"></page-wildflower-card>
+      <page-wildflower-card *ngIf="f" [wildflower]="f"></page-wildflower-card>
     </ion-col>
   </ion-row>
 

@@ -33,8 +33,7 @@ import { WildflowersPage } from '../pages/wildflowers/wildflowers';
     HomePage,
     LoginPage,
     WildflowersPage,
-    WildflowerCardPage,
-    WildflowerDetailPage
+    WildflowerCardPage
   ],
   imports: [
     BrowserModule,
@@ -52,8 +51,7 @@ import { WildflowersPage } from '../pages/wildflowers/wildflowers';
     HomePage,
     LoginPage,
     WildflowersPage,
-    WildflowerCardPage,
-    WildflowerDetailPage
+    WildflowerCardPage
   ],
   providers: [
     StatusBar,

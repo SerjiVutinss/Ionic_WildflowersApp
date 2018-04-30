@@ -1,6 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { WildflowerImage, Wildflower } from '../../models';
+import { WildflowerImagesProvider } from '../../providers/wildflowers';
 
 /**
  * Generated class for the WildflowerCardPage page.
@@ -27,8 +28,18 @@ export class WildflowerCardPage {
 
   constructor(
     private navCtrl: NavController,
-    private navParams: NavParams
+    private navParams: NavParams,
+    private wildflowerImageService: WildflowerImagesProvider
   ) {
+  }
+
+  ngOnInit() {
+    this.wildflowerImageService.get(this.wildflower.scientificName)
+      .subscribe(images => {
+        this.wildflowerImages = images,
+          null,
+          this.defaultImage = this.wildflowerImages[0]
+      });
   }
 
   ionViewDidLoad() {
@@ -36,7 +47,9 @@ export class WildflowerCardPage {
   }
 
   gotoDetail(flower: Wildflower) {
-    //this.navCtrl.push(['/flower', flower.$key]);
+    this.navCtrl.push("WildflowerDetailPage", {
+      wildflower: flower
+    });
   }
 
   onPopoverShown() {

@@ -18,7 +18,18 @@ export class WildflowerImagesProvider {
   constructor(
     private db: AngularFireDatabase
   ) {
-    this.wildflowers = this.db.list(this.basePath, ref => ref.limitToFirst(10)).snapshotChanges();
+    console.log("Hello IMAGE PROVIDER");
+    //this.wildflowers = this.db.list(this.basePath, ref => ref.limitToFirst(10)).snapshotChanges();
   }
 
+  // unused, included for completeness
+  getAll(): Observable<any> {
+    return this.db.list(this.basePath,
+      ref => ref.orderByChild('flower_name')).valueChanges();
+  }
+
+  get(scientificName: string): Observable<any[]> {
+    return this.db.list(this.basePath, ref =>
+      ref.orderByChild('flower_name').equalTo(scientificName)).valueChanges();
+  }
 }

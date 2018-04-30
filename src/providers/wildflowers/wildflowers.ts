@@ -1,8 +1,6 @@
-//import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from "angularfire2/database";
 import { Observable } from 'rxjs/Observable';
-import { Wildflower } from '../../models';
 
 /*
   Generated class for the WildflowersProvider provider.
@@ -28,6 +26,7 @@ export class WildflowersProvider {
     return this.flowers;
   }
 
+  // unused, included for completeness
   get($key: string): Observable<any> {
     return this.db.object(this.basePath + "/" + $key).valueChanges();
   }
