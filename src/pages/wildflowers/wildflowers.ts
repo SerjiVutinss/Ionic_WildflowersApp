@@ -51,7 +51,7 @@ export class WildflowersPage {
 
   setupGridArray() {
 
-    let size: number = 3;
+    let size: number = 4;
 
     this.grid = Array(Math.ceil(this.wildflowers.length / size));
 
@@ -75,11 +75,13 @@ export class WildflowersPage {
     this.wildflowers.sort(
       (a, b) => a.commonName.localeCompare(b.commonName)
     );
+    this.setupGridArray();
   }
   sortByScientificName(desc?: boolean) {
     this.wildflowers.sort(
       (a, b) => a.scientificName.localeCompare(b.scientificName)
     );
+    this.setupGridArray();
   }
 
 }

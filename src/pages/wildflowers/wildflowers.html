@@ -5,27 +5,42 @@
   Ionic pages and navigation.
 -->
 
-<div id="list-container">
-
-  <button ion-button (click)="sortByCommonName()">Common Name (asc)</button>
-  <button ion-button (click)="sortByCommonName()">Common Name (desc)</button>
+<!-- <button ion-button (click)="sortByCommonName()">Common Name (asc)</button>
+<button ion-button (click)="sortByCommonName()">Common Name (desc)</button>
 
 
-  <button ion-button (click)="sortByScientificName()">Scientific Name</button>
-  <button ion-button (click)="sortByScientificName()">Scientific Name(desc)</button>
+<button ion-button (click)="sortByScientificName()">Scientific Name</button>
+<button ion-button (click)="sortByScientificName()">Scientific Name(desc)</button> -->
 
-  <!-- <ion-list *ngIf="wildflowers">
+<!-- <ion-list *ngIf="wildflowers">
     <ion-item *ngFor="let f of wildflowers">
       <page-wildflower-card [wildflower]="f"></page-wildflower-card>
     </ion-item>
   </ion-list> -->
 
-  <ion-grid>
-    <ion-row *ngFor="let row of grid">
-      <ion-col col-3 *ngFor="let f of row">
-        <page-wildflower-card [wildflower]="f"></page-wildflower-card>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+<ion-grid class="card-background-page">
 
-</div>
+  <ion-row>
+    <ion-col>
+      <button ion-button round [small]="true" (click)="sortByCommonName()">Common Name (asc)</button>
+    </ion-col>
+    <ion-col>
+      <button ion-button round [small]="true" (click)="sortByCommonName()">Common Name (desc)</button>
+    </ion-col>
+    <ion-col>
+      <button ion-button round [small]="true" (click)="sortByScientificName()">Scientific Name</button>
+    </ion-col>
+    <ion-col>
+      <button ion-button round [small]="true" (click)="sortByScientificName()">Scientific Name(desc)</button>
+    </ion-col>
+  </ion-row>
+
+
+
+  <ion-row class="card-grid" *ngFor="let row of grid">
+    <ion-col col-sm *ngFor="let f of row">
+      <page-wildflower-card [wildflower]="f"></page-wildflower-card>
+    </ion-col>
+  </ion-row>
+
+</ion-grid>

@@ -1,3 +1,13 @@
+<!-- <p *ngIf="wildflower">{{ wildflower.commonName }}</p> -->
 
-
-<p *ngIf="wildflower">{{ wildflower.commonName }}</p>
+<ion-card *ngIf="wildflower">
+    <img src="img/nin-live.png" />
+    <ion-card-content>
+        <ion-card-title>
+            <h2>{{ wildflower.commonName }}</h2>
+        </ion-card-title>
+        <p>
+            {{ wildflower.scientificName}}
+        </p>
+    </ion-card-content>
+</ion-card>
