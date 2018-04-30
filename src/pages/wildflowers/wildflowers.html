@@ -21,7 +21,7 @@
 <ion-grid class="card-background-page">
 
   <ion-row>
-    <ion-col>
+    <!-- <ion-col>
       <button ion-button round [small]="true" (click)="sortByCommonName()">Common Name (asc)</button>
     </ion-col>
     <ion-col>
@@ -32,6 +32,9 @@
     </ion-col>
     <ion-col>
       <button ion-button round [small]="true" (click)="sortByScientificName()">Scientific Name(desc)</button>
+    </ion-col> -->
+    <ion-col>
+      <button ion-button round outline (click)="openMenu()">Sort</button>
     </ion-col>
   </ion-row>
 
@@ -42,5 +45,8 @@
       <page-wildflower-card *ngIf="f" [wildflower]="f"></page-wildflower-card>
     </ion-col>
   </ion-row>
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 
 </ion-grid>

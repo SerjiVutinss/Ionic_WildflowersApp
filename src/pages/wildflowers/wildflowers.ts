@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ActionSheetController, InfiniteScroll } from 'ionic-angular';
 import { WildflowersProvider } from '../../providers/wildflowers';
 import { Wildflower } from '../../models';
 
@@ -24,14 +24,18 @@ import { Wildflower } from '../../models';
 })
 export class WildflowersPage {
 
+  private defaultLimit = 12;
 
   private wildflowers: Wildflower[];
 
   private grid: Array<Wildflower[]>;
 
+  private limit: number = 12;
+
   constructor(
     private navCtrl: NavController,
     private navParams: NavParams,
+    private actionSheetCtrl: ActionSheetController,
     private wildflowerService: WildflowersProvider
   ) {
 
@@ -49,15 +53,55 @@ export class WildflowersPage {
     console.log('ionViewDidLoad WildflowersPage');
   }
 
+  openMenu() {
+    let actionSheet = this.actionSheetCtrl.create({
+      title: 'Sort Wildflowers',
+      buttons: [
+        {
+          text: 'Common Name (asc)',
+          handler: () => {
+            this.sortByCommonName();
+          }
+        },
+        {
+          text: 'Common Name (desc)',
+          handler: () => {
+            this.sortByCommonName(true);
+          }
+        },
+        {
+          text: 'Scientific Name (asc)',
+          handler: () => {
+            this.sortByScientificName();
+          }
+        },
+        {
+          text: 'Scientific Name (desc)',
+          handler: () => {
+            this.sortByScientificName(true);
+          }
+        },
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }
+      ]
+    });
+    actionSheet.present();
+  }
+
   setupGridArray() {
 
     let size: number = 4;
 
-    this.grid = Array(Math.ceil(this.wildflowers.length / size));
+    this.grid = Array(Math.ceil(this.limit / size));
 
     let n = 0;
     let rowNum = 0;
-    for (let i = 0; i < this.wildflowers.length; i += size) {
+    for (let i = 0; i < this.limit; i += size) {
       this.grid[rowNum] = Array<Wildflower>(size);
 
       n = i;
@@ -71,16 +115,39 @@ export class WildflowersPage {
     }
   }
 
+  doInfinite(event: any) {
+
+    if (this.limit < this.wildflowers.length) {
+      this.limit += this.limit;
+      this.setupGridArray();
+      event.complete();
+    }
+  }
+
   sortByCommonName(desc?: boolean) {
-    this.wildflowers.sort(
-      (a, b) => a.commonName.localeCompare(b.commonName)
-    );
+    this.limit = this.defaultLimit;
+    if (!desc) {
+      this.wildflowers.sort(
+        (a, b) => a.commonName.localeCompare(b.commonName)
+      );
+    } else {
+      this.wildflowers.sort(
+        (a, b) => b.commonName.localeCompare(a.commonName)
+      );
+    }
     this.setupGridArray();
   }
   sortByScientificName(desc?: boolean) {
-    this.wildflowers.sort(
-      (a, b) => a.scientificName.localeCompare(b.scientificName)
-    );
+    this.limit = this.defaultLimit;
+    if (!desc) {
+      this.wildflowers.sort(
+        (a, b) => a.scientificName.localeCompare(b.scientificName)
+      );
+    } else {
+      this.wildflowers.sort(
+        (a, b) => b.scientificName.localeCompare(a.scientificName)
+      );
+    }
     this.setupGridArray();
   }
 
