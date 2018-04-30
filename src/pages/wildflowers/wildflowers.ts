@@ -3,6 +3,8 @@ import { IonicPage, NavController, NavParams, ActionSheetController, InfiniteScr
 import { WildflowersProvider } from '../../providers/wildflowers';
 import { Wildflower } from '../../models';
 
+//import { ThumbnailPipe } from '../../pipes/thumbnail/thumbnail';
+
 /**
  * Generated class for the WildflowersPage page.
  *
@@ -20,7 +22,7 @@ import { Wildflower } from '../../models';
 @IonicPage()
 @Component({
   selector: 'page-wildflowers',
-  templateUrl: 'wildflowers.html',
+  templateUrl: 'wildflowers.html'
 })
 export class WildflowersPage {
 

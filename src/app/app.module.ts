@@ -26,6 +26,7 @@ import { WildflowersProvider, WildflowerImagesProvider } from '../providers/wild
 import { WildflowerCardPage } from '../pages/wildflower-card/wildflower-card';
 import { WildflowerDetailPage } from '../pages/wildflower-detail/wildflower-detail';
 import { WildflowersPage } from '../pages/wildflowers/wildflowers';
+import { ThumbnailPipe } from '../pipes/thumbnail/thumbnail';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { WildflowersPage } from '../pages/wildflowers/wildflowers';
     HomePage,
     LoginPage,
     WildflowersPage,
-    WildflowerCardPage
+    WildflowerCardPage,
+    ThumbnailPipe
   ],
   imports: [
     BrowserModule,
