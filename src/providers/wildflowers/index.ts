@@ -1,5 +1,5 @@
-import { WildflowersProvider } from './wildflowers';
-import { WildflowerImagesProvider } from './wildflower-images';
+import { WildflowersProvider } from './wildflowers-service';
+import { WildflowerImagesProvider } from './wildflower-images-service';
 
 export {
     WildflowersProvider,

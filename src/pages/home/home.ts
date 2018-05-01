@@ -45,6 +45,10 @@ export class HomePage {
     }
   }
 
+  openWildflowers() {
+    this.navCtrl.push("WildflowersPage");
+  }
+
   openTestPage() {
     //if (this.isAuthenticated()) {
       // only navigate here if a user is logged in

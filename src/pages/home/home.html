@@ -18,19 +18,21 @@
 
     </ion-buttons>
   </ion-toolbar>
-</ion-header>
-
-<ion-content padding>
   <ion-list>
     <ion-item *ngIf="afAuthService.authenticated">
       <ion-icon name="contact" item-left></ion-icon>
       {{ afAuthService.getEmail() }}
     </ion-item>
+    <button (click)="openUserPage()">User Profile</button>
+    <button (click)="openTestPage()">Test</button>
+    <button (click)="openWildflowers()">Wildflowers</button>
   </ion-list>
+</ion-header>
 
-  <button (click)="openUserPage()">Go To User Page</button>
-  <button (click)="openTestPage()">Go To Test Page</button>
+<ion-content padding>
 
-  <page-wildflowers></page-wildflowers>
+  
+
+  <!-- <page-wildflowers></page-wildflowers> -->
 
 </ion-content>

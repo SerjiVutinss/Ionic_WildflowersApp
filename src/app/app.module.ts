@@ -23,19 +23,21 @@ import { AfAuthProvider } from '../providers/af-auth/af-auth';
 import { AngularFireDatabaseModule, AngularFireDatabase } from "angularfire2/database";
 // Custom Providers for AngularFire/Firebase data
 import { WildflowersProvider, WildflowerImagesProvider } from '../providers/wildflowers';
-import { WildflowerCardPage } from '../pages/wildflower-card/wildflower-card';
-import { WildflowerDetailPage } from '../pages/wildflower-detail/wildflower-detail';
-import { WildflowersPage } from '../pages/wildflowers/wildflowers';
-import { ThumbnailPipe } from '../pipes/thumbnail/thumbnail';
+
+// Wildflower pages
+import { WildflowersPage, WildflowerCardPage, WildflowerDetailPage } from '../pages/wildflower-pages';
+import { WildflowersPageModule } from '../pages/wildflower-pages/wildflowers/wildflowers.module';
+import { WildflowerDetailPageModule } from '../pages/wildflower-pages/wildflower-detail/wildflower-detail.module';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     LoginPage,
-    WildflowersPage,
-    WildflowerCardPage,
-    ThumbnailPipe
+    // WildflowersPage,
+    // WildflowerCardPage,
+    // WildflowerDetailPage,
+    //ThumbnailPipe
   ],
   imports: [
     BrowserModule,
@@ -45,7 +47,9 @@ import { ThumbnailPipe } from '../pipes/thumbnail/thumbnail';
     IonicStorageModule.forRoot({
       name: '__app.db',
       driverOrder: ['indexeddb', 'sqlite', 'websql']
-    })
+    }),
+    WildflowersPageModule,
+    WildflowerDetailPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -53,7 +57,8 @@ import { ThumbnailPipe } from '../pipes/thumbnail/thumbnail';
     HomePage,
     LoginPage,
     WildflowersPage,
-    WildflowerCardPage
+    WildflowerCardPage,
+    WildflowerDetailPage
   ],
   providers: [
     StatusBar,

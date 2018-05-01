@@ -17,7 +17,7 @@ export class ThumbnailPipe implements PipeTransform {
     let type: string;
     let temp = value.substr(0, value.length - 4);
 
-    arg.length > 0 ? type = arg : type = "m";
+    arg.length > 0 ? type = arg : type = "s";
 
 
     temp = temp + arg + ".jpg";

@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { WildflowerImage, Wildflower } from '../../models';
-import { WildflowerImagesProvider } from '../../providers/wildflowers';
+import { WildflowerImage, Wildflower } from '../models';
+import { WildflowerImagesProvider } from '../../../providers/wildflowers';
 
 /**
  * Generated class for the WildflowerCardPage page.
@@ -10,7 +10,7 @@ import { WildflowerImagesProvider } from '../../providers/wildflowers';
  * Ionic pages and navigation.
  */
 
-@IonicPage()
+//@IonicPage()
 @Component({
   selector: 'page-wildflower-card',
   templateUrl: 'wildflower-card.html',

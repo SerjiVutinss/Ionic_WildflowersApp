@@ -5,7 +5,7 @@ import { Storage } from '@ionic/storage';
 
 import { WildflowersProvider } from '../../providers/wildflowers';
 
-import { Wildflower } from '../../models';
+import { Wildflower } from '../../pages/wildflower-pages/models';
 
 /**
  * Generated class for the TestPage page.

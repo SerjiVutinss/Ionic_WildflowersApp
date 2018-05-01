@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { WildflowerImagesProvider } from '../../providers/wildflowers';
-import { Wildflower, WildflowerImage } from '../../models';
+import { WildflowerImagesProvider } from '../../../providers/wildflowers';
+import { Wildflower, WildflowerImage } from '../models';
 
 /**
  * Generated class for the WildflowerDetailPage page.

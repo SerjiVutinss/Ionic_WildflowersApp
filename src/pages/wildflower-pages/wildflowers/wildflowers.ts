@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ActionSheetController, InfiniteScroll } from 'ionic-angular';
-import { WildflowersProvider } from '../../providers/wildflowers';
-import { Wildflower } from '../../models';
+import { WildflowersProvider } from '../../../providers/wildflowers';
+import { Wildflower } from '../models';
 
 //import { ThumbnailPipe } from '../../pipes/thumbnail/thumbnail';
 

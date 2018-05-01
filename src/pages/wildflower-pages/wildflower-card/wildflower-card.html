@@ -1,7 +1,7 @@
 <!-- <p *ngIf="wildflower">{{ wildflower.commonName }}</p> -->
 
 <ion-card *ngIf="wildflower">
-    <img *ngIf="defaultImage" data-src="{{ defaultImage.img_link | thumbnail: 'm' }}" />
+    <img *ngIf="defaultImage" data-src="{{ defaultImage.img_link | thumbnail: 's' }}" />
     <ion-card-content>
         <ion-card-title>
             <h2>{{ wildflower.commonName }}</h2>
