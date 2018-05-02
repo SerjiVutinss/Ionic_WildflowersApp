@@ -47,6 +47,7 @@ export class WildflowerCardPage {
   }
 
   gotoDetail(flower: Wildflower) {
+    console.log(this.wildflower);
     this.navCtrl.push("WildflowerDetailPage", {
       wildflower: flower
     });

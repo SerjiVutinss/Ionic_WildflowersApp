@@ -11,12 +11,30 @@
     <ion-title>Wildflowers</ion-title>
   </ion-navbar>
 
+  <!-- <header-component></header-component> -->
+
   <ion-grid>
+
     <ion-row>
       <ion-col>
-        <button ion-button round outline (click)="openMenu()">Sort</button>
+        <button ion-button small round outline (click)="openMenu()">Sort</button>
+        <button *ngIf="!filterOn" ion-button small round outline (click)="openPopover()">Filter</button>
+        <button *ngIf="filterOn" ion-button small round outline color="danger" (click)="clearFilter()">Clear</button>
+        <button *ngIf="isCardView" ion-button small round outline (click)="toggleCardView()">List</button>
+        <button *ngIf="!isCardView" ion-button small round outline (click)="toggleCardView()">Card</button>
       </ion-col>
     </ion-row>
+
+    <ion-row *ngIf="filterOnXXX">
+      <ion-col col-sm-8>
+        <ion-searchbar [(ngModel)]="qryString" [showCancelButton]="shouldShowCancel" (ionInput)="onInput($event)" (ionCancel)="onCancel($event)">
+        </ion-searchbar>
+      </ion-col>
+      <ion-col col-sm-4>
+        <button ion-button small round outline (click)="clearFilter()">Clear Filters</button>
+      </ion-col>
+    </ion-row>
+
   </ion-grid>
 
 </ion-header>
@@ -25,15 +43,22 @@
 <ion-content padding>
 
 
-  <ion-grid class="card-background-page">
-    <ion-row class="card-grid" *ngFor="let row of grid">
-      <ion-col col-sm *ngFor="let f of row">
-        <page-wildflower-card *ngIf="f" [wildflower]="f"></page-wildflower-card>
+  <ion-grid *ngIf="isCardView" class="card-background-page">
+    <ion-row class="card-grid" *ngFor="let row of gridMatrix">
+      <ion-col col-sm-3 *ngFor="let wildflower of row">
+        <page-wildflower-card *ngIf="wildflower" [wildflower]="wildflower"></page-wildflower-card>
       </ion-col>
     </ion-row>
     <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
       <ion-infinite-scroll-content></ion-infinite-scroll-content>
     </ion-infinite-scroll>
-
   </ion-grid>
+
+  <ion-list *ngIf="!isCardView">
+    <ion-item *ngFor="let wildflower of wildflowers" (click)="gotoDetail(wildflower)">
+      {{ wildflower.commonName }} |
+      <i>{{ wildflower.scientificName }}</i>
+    </ion-item>
+  </ion-list>
+
 </ion-content>

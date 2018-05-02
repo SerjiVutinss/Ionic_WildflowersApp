@@ -1,0 +1,27 @@
+<ion-toolbar>
+    <button ion-button menuToggle right>
+        <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>
+        My Firebase App
+    </ion-title>
+    <ion-buttons end>
+
+        <ion-item (click)="logout()" *ngIf="afAuthService.authenticated">
+            Log out
+        </ion-item>
+
+        <ion-item (click)="login()" *ngIf="!afAuthService.authenticated">
+            Log in
+        </ion-item>
+
+    </ion-buttons>
+</ion-toolbar>
+<ion-list>
+    <ion-item *ngIf="afAuthService.authenticated">
+        <ion-icon name="contact" item-left></ion-icon>
+        {{ afAuthService.getEmail() }}
+    </ion-item>
+    <button (click)="openUserPage()">User Profile</button>
+    <button (click)="openTestPage()">Test</button>
+</ion-list>

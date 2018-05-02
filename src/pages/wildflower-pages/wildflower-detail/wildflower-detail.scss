@@ -7,13 +7,15 @@ ion-slides {
 }
 
 #image-slider {
-    width: 100%;
-    height: 320px;
+    width: 88%;
+    height: 300px;
+    margin-left: 6%;
+    margin-right: 6%;
 }
 
 .slide-image {
-    height: 640px;
-    width: 640px;
+    height: 540px;
+    width: 540px;
 }
 
 #image-slider .slider-pager-page {

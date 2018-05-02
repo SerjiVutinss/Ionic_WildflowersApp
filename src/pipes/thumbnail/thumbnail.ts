@@ -22,8 +22,6 @@ export class ThumbnailPipe implements PipeTransform {
 
     temp = temp + arg + ".jpg";
 
-    console.log(temp);
-
     return temp;
   }
 }

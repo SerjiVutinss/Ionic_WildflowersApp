@@ -12,8 +12,8 @@ import { Observable } from 'rxjs/Observable';
 export class WildflowersProvider {
 
 
-  basePath: string = '/wildflowers';
-  flowers: Observable<any[]>;
+  private basePath: string = '/wildflowers';
+  private flowers: Observable<any[]>;
 
   constructor(private db: AngularFireDatabase) {
     console.log('Hello WildflowersProvider Provider');

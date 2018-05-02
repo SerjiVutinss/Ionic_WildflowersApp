@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Wildflower Detail</ion-title>
+    <ion-title>{{ wildflower.commonName }}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -15,28 +15,61 @@
 
 <ion-content padding>
 
-  <h3>{{ wildflower.commonName }} |
-    <i> {{ wildflower.familyNameScientific }}</i>
-  </h3>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-6>
+        <label>
+          <b>Common Name</b>
+        </label>
+      </ion-col>
+      <ion-col col-6>
+        <label>
+          <b>Scientific Name</b>
+        </label>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col col-6>
+        {{ wildflower.commonName }}
+      </ion-col>
+      <ion-col col-6>
+        <i> {{ wildflower.scientificName }}</i>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
   <ion-grid style="width: 100%">
-    <ion-row>
-        <ion-slides pager paginationType="progress" id="image-slider" [effect]="cube" *ngIf="wildflowerImages">
-          <ion-slide *ngFor="let i of wildflowerImages">
-            <img class="slide-image" data-src="{{ i.img_link }}">
-          </ion-slide>
-        </ion-slides>
-    </ion-row>
 
     <ion-row>
-        <ion-list>
-            <ion-item>
-              <label>Location</label>
-              <p>{{ wildflower.location }}</p>
-            </ion-item>
-          </ion-list>
+      <ion-slides pager paginationType="progress" id="image-slider" [effect]="cube" *ngIf="wildflowerImages">
+        <ion-slide *ngFor="let i of wildflowerImages">
+          <img class="slide-image" data-src="{{ i.img_link }}">
+        </ion-slide>
+      </ion-slides>
     </ion-row>
 
-  </ion-grid>  
+    <!-- <ion-row>
+    <ion-list>
+      <ion-item>
+        <p><b>Location: </b>{{ wildflower.location }}</p>
+      </ion-item>
+      <ion-item>
+          <p><b>Location: </b>{{ wildflower.location }}</p>
+        </ion-item>
+    </ion-list>
+  </ion-row> -->
+
+    <ion-row style="margin-top: 10">
+      <p>
+        <b>Family Name: </b>{{ wildflower.familyNameCommon }} |
+        <i>{{ wildflower.familyNameScientific }}</i>
+        <br/>
+        <b>Location: </b>{{ wildflower.location }}
+        <br/>
+        <b>Features: </b>{{ wildflower.plantFeatures }}</p>
+    </ion-row>
+
+  </ion-grid>
 
 </ion-content>

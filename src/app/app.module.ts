@@ -22,22 +22,22 @@ import { AfAuthProvider } from '../providers/af-auth/af-auth';
 // AngularFire Database Module and Provider
 import { AngularFireDatabaseModule, AngularFireDatabase } from "angularfire2/database";
 // Custom Providers for AngularFire/Firebase data
-import { WildflowersProvider, WildflowerImagesProvider } from '../providers/wildflowers';
+import { WildflowersProvider, WildflowerImagesProvider, WildflowerSortFilterProvider } from '../providers/wildflowers';
+
+//import { HeaderComponent } from '../components/header/header';
 
 // Wildflower pages
-import { WildflowersPage, WildflowerCardPage, WildflowerDetailPage } from '../pages/wildflower-pages';
+//import { WildflowersPage, WildflowerCardPage, WildflowerDetailPage } from '../pages/wildflower-pages';
 import { WildflowersPageModule } from '../pages/wildflower-pages/wildflowers/wildflowers.module';
 import { WildflowerDetailPageModule } from '../pages/wildflower-pages/wildflower-detail/wildflower-detail.module';
+
+import { HeaderModule} from '../components/header/header.module';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    LoginPage,
-    // WildflowersPage,
-    // WildflowerCardPage,
-    // WildflowerDetailPage,
-    //ThumbnailPipe
+    LoginPage
   ],
   imports: [
     BrowserModule,
@@ -49,16 +49,17 @@ import { WildflowerDetailPageModule } from '../pages/wildflower-pages/wildflower
       driverOrder: ['indexeddb', 'sqlite', 'websql']
     }),
     WildflowersPageModule,
-    WildflowerDetailPageModule
+    WildflowerDetailPageModule,
+    HeaderModule
+  ],
+  exports: [
+    HeaderModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
     HomePage,
-    LoginPage,
-    WildflowersPage,
-    WildflowerCardPage,
-    WildflowerDetailPage
+    LoginPage
   ],
   providers: [
     StatusBar,
@@ -67,7 +68,9 @@ import { WildflowerDetailPageModule } from '../pages/wildflower-pages/wildflower
     AngularFireAuth,
     AfAuthProvider,
     WildflowersProvider,
-    WildflowerImagesProvider
+    WildflowerImagesProvider,
+    WildflowerSortFilterProvider
   ]
 })
-export class AppModule { }
+export class AppModule { 
+}

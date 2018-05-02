@@ -1,5 +1,26 @@
 <ion-header>
-  <ion-toolbar>
+
+  <!-- <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name='menu'></ion-icon>
+    </button>
+    <ion-title>
+      Menus
+    </ion-title>
+  </ion-navbar>
+  
+  <ion-nav #mycontent [root]="rootPage"></ion-nav>
+
+  <ion-menu [content]="mycontent">
+    <ion-content>
+      <ion-list>
+        <p>some menu content, could be list items</p>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+
+
+  <!-- <ion-toolbar>
     <button ion-button menuToggle right>
       <ion-icon name="menu"></ion-icon>
     </button>
@@ -17,8 +38,12 @@
       </ion-item>
 
     </ion-buttons>
-  </ion-toolbar>
-  <ion-list>
+  </ion-toolbar> -->
+
+
+
+
+  <!-- <ion-list>
     <ion-item *ngIf="afAuthService.authenticated">
       <ion-icon name="contact" item-left></ion-icon>
       {{ afAuthService.getEmail() }}
@@ -26,12 +51,23 @@
     <button (click)="openUserPage()">User Profile</button>
     <button (click)="openTestPage()">Test</button>
     <button (click)="openWildflowers()">Wildflowers</button>
-  </ion-list>
+  </ion-list> --> -->
+
+  <header-component></header-component>
 </ion-header>
 
 <ion-content padding>
 
-  
+  <!-- <button ion-button block menuToggle>Toggle Menu</button> -->
+
+  <img src="http://i.imgur.com/xewNJAH.jpg">
+  <ion-grid>
+    <ion-col sm-2></ion-col>
+    <ion-col sm-8>
+      <button id="button-wildflowers" (click)="openWildflowersPage()" ion-button large outline round>View Wildflowers</button>
+    </ion-col>
+    <ion-col sm-2></ion-col>
+  </ion-grid>
 
   <!-- <page-wildflowers></page-wildflowers> -->
 

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, AlertController } from 'ionic-angular';
+import { NavController, AlertController, MenuController } from 'ionic-angular';
 import { AfAuthProvider } from '../../providers/af-auth/af-auth';
 import { LoginPage } from '../login/login';
 
@@ -13,13 +13,20 @@ export class HomePage {
   constructor(
     private navCtrl: NavController,
     private alertCtrl: AlertController,
-    private afAuthService: AfAuthProvider
-  ) { }
+    private afAuthService: AfAuthProvider,
+    private menu: MenuController
+  ) {
+    menu.enable(true);
+  }
 
   // sign out the current user and navigate to the login page
   login() {
     this.afAuthService.signOut();
     this.navCtrl.setRoot(LoginPage);
+  }
+
+  toggleMenu() {
+    this.menu.toggle;
   }
 
   // sign out the current user and reload the home page
@@ -45,14 +52,14 @@ export class HomePage {
     }
   }
 
-  openWildflowers() {
+  openWildflowersPage() {
     this.navCtrl.push("WildflowersPage");
   }
 
   openTestPage() {
     //if (this.isAuthenticated()) {
-      // only navigate here if a user is logged in
-      this.navCtrl.push("TestPage");
+    // only navigate here if a user is logged in
+    this.navCtrl.push("TestPage");
     // } else {
     //   // otherwise, display an alert
     //   let alert = this.alertCtrl.create({

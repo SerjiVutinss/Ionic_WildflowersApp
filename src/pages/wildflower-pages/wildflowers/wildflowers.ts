@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ActionSheetController, InfiniteScroll } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ActionSheetController, InfiniteScroll, PopoverController } from 'ionic-angular';
 import { WildflowersProvider } from '../../../providers/wildflowers';
 import { Wildflower } from '../models';
+import { WildflowerFilterPage } from '../wildflower-filter/wildflower-filter';
+import { WildflowerSortFilterProvider } from '../../../providers/wildflowers/wildflower-sort-service';
+
 
 //import { ThumbnailPipe } from '../../pipes/thumbnail/thumbnail';
 
@@ -26,36 +29,135 @@ import { Wildflower } from '../models';
 })
 export class WildflowersPage {
 
-  private defaultLimit = 12;
+  // This is the number of items which are loaded each time the infinite scroll 
+  // handler is triggered.  The value of this variable is never changed and so is
+  // declared as readonly.
+  private readonly defaultLimit = 12;
 
+  // The number of items to load on infinite scroll event - doInfinite()
+  // Inital value is set to defaultLimit and is incremented on each infinite scroll event
+  private numItems: number = this.defaultLimit;
+
+  // All of the returned firebase records
+  // Once it is assigned in the page constructor, its contents never change
+  private allWildflowers: Wildflower[];
+
+  // This array will contain the filtered or sorted records
   private wildflowers: Wildflower[];
 
-  private grid: Array<Wildflower[]>;
+  // A 2D array - this is assigned through the WildflowerSortFilterProvider
+  // It is the view array and determines how each object is displayed in the template grid
+  private gridMatrix: Array<Wildflower[]>;
 
-  private limit: number = 12;
+  // Maximum number of elements per grid row, this is passed into the 
+  // WildflowerSortFilterProvider functions
+  private gridWidth: number = 1;
+
+
+  // The string variable used by the search bar
+  private qryString: string;
+
+  private filterOn: boolean = false;
+
+  private isCardView: boolean = true;
 
   constructor(
     private navCtrl: NavController,
     private navParams: NavParams,
     private actionSheetCtrl: ActionSheetController,
-    private wildflowerService: WildflowersProvider
+    private popoverCtrl: PopoverController,
+    private wildflowerService: WildflowersProvider,
+    private wildflowerSortFilterService: WildflowerSortFilterProvider
   ) {
 
+    // Assign all returned firebase results to the allWildflowers array
     this.wildflowerService.getAll().subscribe(
       wildflowers => {
-        this.wildflowers = wildflowers,
+        this.allWildflowers = wildflowers,
           null,
-          this.setupGridArray()
-      }
+          // finally assign the results to the class array
+          this.wildflowers = this.allWildflowers;
+        console.log(this.wildflowers);
+        this.sortByCommonName();
+        this.setupGrid();
+      });
+  }
+
+  toggleCardView() {
+    this.isCardView = !this.isCardView;
+  }
+
+  gotoDetail(flower: Wildflower) {
+    this.navCtrl.push("WildflowerDetailPage", {
+      wildflower: flower
+    });
+  }
+
+  openFilter() {
+    this.filterOn = !this.filterOn;
+  }
+
+  setupGrid() {
+    this.gridMatrix = this.wildflowerSortFilterService.setupGridArray(
+      this.wildflowers, this.numItems, this.gridWidth
+    );
+  }
+
+  filterWildflowers() {
+    this.wildflowers = this.allWildflowers.filter(flower =>
+      flower.commonName.toLowerCase().indexOf(this.qryString.toLowerCase()) >= 0
     );
 
+    if (this.wildflowers.length < this.allWildflowers.length) {
+      this.filterOn = true;
+    } else {
+      this.filterOn = false;
+    }
+
+    this.setupGrid();
+  }
+
+  onInput() {
+    this.filterWildflowers();
+  }
+
+  clearFilter() {
+    this.qryString = "";
+    this.filterOn = false;
+    this.wildflowers = this.allWildflowers;
+    this.setupGrid();
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad WildflowersPage');
   }
 
-  openMenu() {
+  openPopover(event): void {
+    let popover = this.popoverCtrl.create(WildflowerFilterPage);
+
+    let ev = {
+      target: {
+        getBoundingClientRect: () => {
+          return {
+            top: '250'
+          };
+        }
+      }
+    }
+
+    popover.present({ ev });
+
+    popover.onDidDismiss(qryString => {
+
+      if (qryString != null) {
+        this.qryString = qryString;
+        this.filterWildflowers();
+      }
+    });
+
+  }
+
+  openMenu(): void {
     let actionSheet = this.actionSheetCtrl.create({
       title: 'Sort Wildflowers',
       buttons: [
@@ -95,62 +197,54 @@ export class WildflowersPage {
     actionSheet.present();
   }
 
-  setupGridArray() {
-
-    let size: number = 4;
-
-    this.grid = Array(Math.ceil(this.limit / size));
-
-    let n = 0;
-    let rowNum = 0;
-    for (let i = 0; i < this.limit; i += size) {
-      this.grid[rowNum] = Array<Wildflower>(size);
-
-      n = i;
-      for (let j = 0; j < size; j++) {
-        if (this.wildflowers[n] != null) {
-          this.grid[rowNum][j] = this.wildflowers[n];
-        }
-        n++;
-      }
-      rowNum++;
-    }
-  }
-
-  doInfinite(event: any) {
-
-    if (this.limit < this.wildflowers.length) {
-      this.limit += this.limit;
-      this.setupGridArray();
-      event.complete();
-    }
-  }
-
-  sortByCommonName(desc?: boolean) {
-    this.limit = this.defaultLimit;
-    if (!desc) {
-      this.wildflowers.sort(
-        (a, b) => a.commonName.localeCompare(b.commonName)
-      );
-    } else {
-      this.wildflowers.sort(
-        (a, b) => b.commonName.localeCompare(a.commonName)
+  /**
+  * doInfinite() - this function is the handler for the infinite scroll element
+  * @param event This is the event parameter, it is passed in from the the template
+  * 
+  *  Notes: The function uses class variables which are used to load more items
+  *   
+  */
+  doInfinite(event: any): void {
+    // Only re-calculate the grid matrix if needed, e.g. the wildflowers array may be 
+    // filtered and contain less than numItems, or all items may already have loaded
+    if (this.numItems < this.wildflowers.length) {
+      this.numItems += this.defaultLimit; // load defaultLimit more items this time
+      console.log(this.numItems);
+      // call the service method to return and assign the grid matrix
+      this.gridMatrix = this.wildflowerSortFilterService.setupGridArray(
+        this.wildflowers,
+        this.numItems,
+        this.gridWidth
       );
     }
-    this.setupGridArray();
-  }
-  sortByScientificName(desc?: boolean) {
-    this.limit = this.defaultLimit;
-    if (!desc) {
-      this.wildflowers.sort(
-        (a, b) => a.scientificName.localeCompare(b.scientificName)
-      );
-    } else {
-      this.wildflowers.sort(
-        (a, b) => b.scientificName.localeCompare(a.scientificName)
-      );
-    }
-    this.setupGridArray();
+    // this will notify the infinite scroll element that loading has completed,
+    // and the loading spinner should be removed
+    event.complete();
   }
 
+  /**
+  * sortByCommonName() - sort the grid matrix by each wildflower's commonName attribute
+  * @param desc - optional parameter, if true, grid matric will be sorted in reverse order 
+  *   Note: This function resets any filters applied to the matrix
+  */
+  sortByCommonName(desc?: boolean): void {
+    this.numItems = this.defaultLimit; // reset the numItems to the default amount
+    // call the service method which returns the sorted matrix
+    this.gridMatrix = this.wildflowerSortFilterService.sortByCommonName(
+      this.wildflowers, this.numItems, this.gridWidth, desc
+    )
+  }
+
+  /**
+  * sortByScientificName() - sort the grid matrix by each wildflower's scientificName attribute
+  * @param desc - optional parameter, if true, grid matric will be sorted in reverse order 
+  *   Note: This function resets any filters applied to the matrix
+  */
+  sortByScientificName(desc?: boolean): void {
+    this.numItems = this.defaultLimit; // reset the numItems to the default amount
+    // call the service method which returns the sorted matrix
+    this.gridMatrix = this.wildflowerSortFilterService.sortByScientificName(
+      this.wildflowers, this.numItems, this.gridWidth, desc
+    )
+  }
 }
