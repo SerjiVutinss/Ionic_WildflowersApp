@@ -24,6 +24,9 @@ export class UserPage {
 
   private user: User;
 
+  //private listView: string = "false";
+  private isDisabled: boolean = true;
+
   constructor(
     private afAuthService: AfAuthProvider,
     private storage: Storage
@@ -48,8 +51,11 @@ export class UserPage {
       .then((data) => {
         if (data == null) {
           console.log("User has no settings");
+          this.user.listView = false;
         } else {
           this.user.username = data.username;
+          this.user.listView = data.listView;
+          console.log(this.user.listView);
         }
       })
       .catch((err) => {
@@ -58,7 +64,9 @@ export class UserPage {
   }
 
   updateUserDetails() {
-    this.storage.set(this.user.email, { "username": this.user.username });
+    this.storage.set(this.user.email, {
+      'username': this.user.username,
+      'listView': this.user.listView
+    });
   }
-
 }

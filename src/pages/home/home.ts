@@ -22,7 +22,8 @@ export class HomePage {
   // sign out the current user and navigate to the login page
   login() {
     this.afAuthService.signOut();
-    this.navCtrl.setRoot(LoginPage);
+    //this.navCtrl.setRoot(LoginPage);
+    this.navCtrl.push(LoginPage);
   }
 
   toggleMenu() {
@@ -32,7 +33,8 @@ export class HomePage {
   // sign out the current user and reload the home page
   logout() {
     this.afAuthService.signOut();
-    this.navCtrl.setRoot(HomePage);
+
+    //this.navCtrl.setRoot(HomePage);
   }
 
   // used for testing if a user is authenticated

@@ -5,18 +5,31 @@
     <ion-title>
         My Firebase App
     </ion-title>
-    <ion-buttons end>
+    <!-- <ion-buttons end>
 
-        <ion-item (click)="logout()" *ngIf="afAuthService.authenticated">
-            Log out
-        </ion-item>
 
-        <ion-item (click)="login()" *ngIf="!afAuthService.authenticated">
-            Log in
-        </ion-item>
 
-    </ion-buttons>
+    </ion-buttons> -->
 </ion-toolbar>
+
+<ion-nav #mycontent [root]="rootPage"></ion-nav>
+
+<ion-menu [content]="mycontent">
+    <ion-content>
+        <ion-list>
+
+            <ion-item (click)="logout()" *ngIf="afAuthService.authenticated">
+                Log out
+            </ion-item>
+
+            <ion-item (click)="login()" *ngIf="!afAuthService.authenticated">
+                Log in
+            </ion-item>
+
+        </ion-list>
+    </ion-content>
+</ion-menu>
+
 <ion-list>
     <ion-item *ngIf="afAuthService.authenticated">
         <ion-icon name="contact" item-left></ion-icon>
