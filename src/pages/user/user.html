@@ -7,7 +7,9 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>{{ user.email }}</ion-title>
+    <div *ngIf="user">
+      <ion-title>{{ user.email }}</ion-title>
+    </div>
   </ion-navbar>
 
 </ion-header>
@@ -17,26 +19,26 @@
 
 
   <!-- <form #form="ngForm" (ngSubmit)="updateUserDetails(form)" novalidate> -->
+  <div *ngIf="user">
+    <!-- <ion-label>
+      <b>Display Name:</b>
+    </ion-label> -->
+    <ion-input type="text" placeholder="Display Name" [(ngModel)]="user.username" ngControl="username"></ion-input>
 
-  <ion-label>
-    <b>Display Name:</b>
-  </ion-label>
-  <ion-input type="text" [(ngModel)]="user.username" ngControl="username"></ion-input>
-
-  <ion-list>
-    <ion-list radio-group [(ngModel)]="user.listView">
-      <ion-item>
-        <ion-label>Card View</ion-label>
-        <ion-radio value="false"></ion-radio>
-      </ion-item>
-      <ion-item>
-        <ion-label>List View</ion-label>
-        <ion-radio value="true"></ion-radio>
-      </ion-item>
+    <ion-list>
+      <ion-list radio-group [(ngModel)]="user.listView">
+        <ion-item>
+          <ion-label>Card View</ion-label>
+          <ion-radio value="false"></ion-radio>
+        </ion-item>
+        <ion-item>
+          <ion-label>List View</ion-label>
+          <ion-radio value="true"></ion-radio>
+        </ion-item>
+      </ion-list>
     </ion-list>
-  </ion-list>
 
-  <button ion-button (click)="updateUserDetails()" block>Update</button>
-
+    <button ion-button (click)="updateUserDetails()" block>Update</button>
+  </div>
   <!-- </form> -->
 </ion-content>

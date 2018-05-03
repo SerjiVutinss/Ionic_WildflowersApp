@@ -1,12 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IonicPage } from 'ionic-angular';
 import { AfAuthProvider } from '../../providers/af-auth/af-auth';
-
-// FormBuilder
-//import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-
 import { Storage } from '@ionic/storage';
+
 import { User } from '../../models';
+
 
 /**
  * Generated class for the UserPage page.
@@ -24,19 +22,14 @@ export class UserPage {
 
   private user: User;
 
-  //private listView: string = "false";
-  private isDisabled: boolean = true;
+  // workaround because getting undefined for user.username
+  private username: string;
 
   constructor(
     private afAuthService: AfAuthProvider,
     private storage: Storage
   ) {
     this.user = new User();
-  }
-
-  // a user must be logged in to access this page!
-  ionViewCanEnter() {
-    return this.afAuthService.authenticated;
   }
 
   ionViewDidLoad() {
@@ -69,4 +62,5 @@ export class UserPage {
       'listView': this.user.listView
     });
   }
+
 }
