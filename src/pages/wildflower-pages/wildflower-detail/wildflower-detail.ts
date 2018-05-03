@@ -3,6 +3,8 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { WildflowerImagesProvider } from '../../../providers/wildflowers';
 import { Wildflower, WildflowerImage } from '../models';
 
+import { BrowserTab } from '@ionic-native/browser-tab';
+
 /**
  * Generated class for the WildflowerDetailPage page.
  *
@@ -23,7 +25,8 @@ export class WildflowerDetailPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    private wildflowerImageService: WildflowerImagesProvider
+    private wildflowerImageService: WildflowerImagesProvider,
+    private browserTab: BrowserTab
   ) {
     this.wildflower = this.navParams.get('wildflower');
   }
@@ -37,6 +40,20 @@ export class WildflowerDetailPage {
   }
 
   ionViewDidLoad() {
+  }
+
+  viewInBrowser(wildflowerImage: WildflowerImage) {
+    this.browserTab.isAvailable().then(
+      (isAvailable: boolean) => {
+        if(isAvailable) {
+          this.browserTab.openUrl(wildflowerImage.img_link);
+        } else {
+          // TODO
+        }
+      }
+    ).catch(err => {
+      console.log(err);
+    });
   }
 
 }

@@ -8,6 +8,9 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 
+
+import { BrowserTab } from '@ionic-native/browser-tab';
+
 // Storage
 import { IonicStorageModule } from '@ionic/storage';
 
@@ -69,7 +72,8 @@ import { HeaderModule} from '../components/header/header.module';
     AfAuthProvider,
     WildflowersProvider,
     WildflowerImagesProvider,
-    WildflowerSortFilterProvider
+    WildflowerSortFilterProvider,
+    BrowserTab
   ]
 })
 export class AppModule { 

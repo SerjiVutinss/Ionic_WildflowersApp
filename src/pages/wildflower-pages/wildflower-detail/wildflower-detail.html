@@ -44,7 +44,7 @@
     <ion-row>
       <ion-slides pager paginationType="progress" id="image-slider" [effect]="cube" *ngIf="wildflowerImages">
         <ion-slide *ngFor="let i of wildflowerImages">
-          <img class="slide-image" data-src="{{ i.img_link }}">
+          <img (click)="viewInBrowser(i)" class="slide-image" data-src="{{ i.img_link }}">
         </ion-slide>
       </ion-slides>
     </ion-row>

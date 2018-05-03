@@ -20,11 +20,14 @@
 
   <!-- <form #form="ngForm" (ngSubmit)="updateUserDetails(form)" novalidate> -->
   <div *ngIf="user">
-    <!-- <ion-label>
+    <ion-label>
       <b>Display Name:</b>
-    </ion-label> -->
+    </ion-label>
     <ion-input type="text" placeholder="Display Name" [(ngModel)]="user.username" ngControl="username"></ion-input>
 
+    <ion-label>
+        <b>Default View Type:</b>
+      </ion-label>
     <ion-list>
       <ion-list radio-group [(ngModel)]="user.listView">
         <ion-item>
@@ -35,6 +38,30 @@
           <ion-label>List View</ion-label>
           <ion-radio value="true"></ion-radio>
         </ion-item>
+      </ion-list>
+    </ion-list>
+
+    <ion-label>
+        <b>Default Sort Type:</b>
+      </ion-label>
+    <ion-list>
+      <ion-list radio-group [(ngModel)]="user.sortType">
+        <ion-item>
+          <ion-label>Common Name (asc)</ion-label>
+          <ion-radio value="commonAsc"></ion-radio>
+        </ion-item>
+        <ion-item>
+          <ion-label>Common Name (desc)</ion-label>
+          <ion-radio value="commonDesc"></ion-radio>
+        </ion-item>
+        <ion-item>
+            <ion-label>Scientific Name (asc)</ion-label>
+            <ion-radio value="scientificAsc"></ion-radio>
+          </ion-item>
+          <ion-item>
+            <ion-label>Scientific Name (desc)</ion-label>
+            <ion-radio value="scientificDesc"></ion-radio>
+          </ion-item>
       </ion-list>
     </ion-list>
 

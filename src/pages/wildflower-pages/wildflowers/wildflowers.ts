@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ActionSheetController, InfiniteScroll, PopoverController } from 'ionic-angular';
+import { IonicPage, NavController, ActionSheetController, InfiniteScroll, PopoverController } from 'ionic-angular';
 import { WildflowersProvider } from '../../../providers/wildflowers';
 import { Wildflower } from '../models';
 import { WildflowerFilterPage } from '../wildflower-filter/wildflower-filter';
 import { WildflowerSortFilterProvider } from '../../../providers/wildflowers/wildflower-sort-service';
-
+import { Storage } from '@ionic/storage';
+import { User } from '../../../models';
+import { AfAuthProvider } from '../../../providers/af-auth/af-auth';
 
 //import { ThumbnailPipe } from '../../pipes/thumbnail/thumbnail';
 
@@ -59,17 +61,20 @@ export class WildflowersPage {
 
   private filterOn: boolean = false;
 
-  private isCardView: boolean = true;
+  private isListView: boolean = false;
+
+  private user: User;
 
   constructor(
     private navCtrl: NavController,
-    private navParams: NavParams,
     private actionSheetCtrl: ActionSheetController,
     private popoverCtrl: PopoverController,
     private wildflowerService: WildflowersProvider,
-    private wildflowerSortFilterService: WildflowerSortFilterProvider
+    private wildflowerSortFilterService: WildflowerSortFilterProvider,
+    private storage: Storage,
+    private afAuth: AfAuthProvider
   ) {
-
+    //this.setUserPrefs();
     // Assign all returned firebase results to the allWildflowers array
     this.wildflowerService.getAll().subscribe(
       wildflowers => {
@@ -77,14 +82,41 @@ export class WildflowersPage {
           null,
           // finally assign the results to the class array
           this.wildflowers = this.allWildflowers;
-        console.log(this.wildflowers);
-        this.sortByCommonName();
-        this.setupGrid();
+          this.getUserDetails();
       });
   }
 
+  setUserPrefs() {
+    console.log(this.user);
+    this.isListView = !!this.user.listView;
+  }
+
+  getUserDetails() {
+    this.user = new User();
+    this.user.email = this.afAuth.getEmail();
+
+    this.storage.get
+      (this.user.email)
+      .then((data) => {
+        if (data == null) {
+          console.log("User has no settings");
+          this.user.listView = false;
+        } else {
+          this.user.username = data.username;
+          this.user.listView = (data.listView == 'true');
+          this.user.sortType = data.sortType;
+          this.isListView = !!this.user.listView;
+          this.sortByCommonName();
+          this.setupGrid();
+        }
+      })
+      .catch((err) => {
+        console.log("Error = " + err);
+      })
+  }
+
   toggleCardView() {
-    this.isCardView = !this.isCardView;
+    this.isListView = !this.isListView;
   }
 
   gotoDetail(flower: Wildflower) {
@@ -128,10 +160,6 @@ export class WildflowersPage {
     this.setupGrid();
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad WildflowersPage');
-  }
-
   openPopover(event): void {
     let popover = this.popoverCtrl.create(WildflowerFilterPage);
 
@@ -157,7 +185,7 @@ export class WildflowersPage {
 
   }
 
-  openMenu(): void {
+  openSortMenu(): void {
     let actionSheet = this.actionSheetCtrl.create({
       title: 'Sort Wildflowers',
       buttons: [

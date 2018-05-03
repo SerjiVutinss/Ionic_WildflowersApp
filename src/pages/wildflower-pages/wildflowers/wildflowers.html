@@ -17,11 +17,26 @@
 
     <ion-row>
       <ion-col>
-        <button ion-button small round outline (click)="openMenu()">Sort</button>
+        <!-- <button ion-button small round outline (click)="openMenu()">Sort</button>
         <button *ngIf="!filterOn" ion-button small round outline (click)="openPopover()">Filter</button>
         <button *ngIf="filterOn" ion-button small round outline color="danger" (click)="clearFilter()">Clear</button>
         <button *ngIf="isCardView" ion-button small round outline (click)="toggleCardView()">List</button>
-        <button *ngIf="!isCardView" ion-button small round outline (click)="toggleCardView()">Card</button>
+        <button *ngIf="!isCardView" ion-button small round outline (click)="toggleCardView()">Card</button> -->
+        <button ion-button primary (click)="openSortMenu()">
+          <ion-icon name="options"></ion-icon>
+        </button>
+        <button ion-button primary *ngIf="!filterOn" (click)="openPopover()">
+          <ion-icon name="funnel"></ion-icon>
+        </button>
+        <button ion-button primary color="danger" *ngIf="filterOn" (click)="clearFilter()">
+          <ion-icon name="funnel"></ion-icon>
+        </button>
+        <button ion-button primary *ngIf="!isListView" (click)="toggleCardView()">
+          <ion-icon name="list"></ion-icon>
+        </button>
+        <button ion-button primary *ngIf="isListView" (click)="toggleCardView()">
+          <ion-icon name="grid"></ion-icon>
+        </button>
       </ion-col>
     </ion-row>
 
@@ -43,7 +58,7 @@
 <ion-content padding>
 
 
-  <ion-grid *ngIf="isCardView" class="card-background-page">
+  <ion-grid *ngIf="!isListView" class="card-background-page">
     <ion-row class="card-grid" *ngFor="let row of gridMatrix">
       <ion-col col-sm-3 *ngFor="let wildflower of row">
         <page-wildflower-card *ngIf="wildflower" [wildflower]="wildflower"></page-wildflower-card>
@@ -54,7 +69,7 @@
     </ion-infinite-scroll>
   </ion-grid>
 
-  <ion-list *ngIf="!isCardView">
+  <ion-list *ngIf="isListView">
     <ion-item *ngFor="let wildflower of wildflowers" (click)="gotoDetail(wildflower)">
       {{ wildflower.commonName }} |
       <i>{{ wildflower.scientificName }}</i>

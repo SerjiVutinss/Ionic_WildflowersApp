@@ -36,6 +36,9 @@ export class UserPage {
     console.log('ionViewDidLoad UserPage');
     this.user.email = this.afAuthService.getEmail();
     this.getUserDetails();
+    if(this.user.sortType ==null){
+      this.user.sortType="commonAsc"
+    }
   }
 
   getUserDetails() {
@@ -47,8 +50,8 @@ export class UserPage {
           this.user.listView = false;
         } else {
           this.user.username = data.username;
-          this.user.listView = data.listView;
-          console.log(this.user.listView);
+          this.user.listView = (data.listView == 'true');
+          this.user.sortType = data.sortType
         }
       })
       .catch((err) => {
@@ -59,7 +62,8 @@ export class UserPage {
   updateUserDetails() {
     this.storage.set(this.user.email, {
       'username': this.user.username,
-      'listView': this.user.listView
+      'listView': this.user.listView,
+      'sortType': this.user.sortType
     });
   }
 
