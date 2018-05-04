@@ -29,7 +29,7 @@ export class UserPage {
     private afAuthService: AfAuthProvider,
     private storage: Storage
   ) {
-    this.user = new User();
+    this.user = new User(this.afAuthService.getEmail());
   }
 
   ionViewDidLoad() {

@@ -2,11 +2,10 @@ import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from "angularfire2/database";
 import { Observable } from 'rxjs/Observable';
 
-/*
-  Generated class for the WildflowersProvider provider.
-
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
+/**
+*  Provider to handle retrieving wildflower data from Firebase
+* 
+*  Uses https://github.com/angular/angularfire2 library to retrieve data from Firebase
 */
 @Injectable()
 export class WildflowersProvider {
@@ -18,11 +17,19 @@ export class WildflowersProvider {
   constructor(private db: AngularFireDatabase) {
     console.log('Hello WildflowersProvider Provider');
 
+    // data only retrieved once
     this.flowers = db.list(this.basePath).valueChanges();
 
   }
 
+  /**
+  * Function to return all wildflower data from Firebase
+  * which populates the main list or card view
+  * 
+  * @returns an Observable<any> of all records at the Firebase path (basePath)
+  */
   getAll(): Observable<any[]> {
+    // do not hit the database again, simply return Observable array
     return this.flowers;
   }
 

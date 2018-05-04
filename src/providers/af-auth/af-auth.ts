@@ -3,15 +3,13 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
 
-/*
-  Generated class for the AfAuthProvider provider.
-
-  Handles Firebase Authentication, including sign in and sign out
-
-  My code has been adapted from following tutorial and git repo:
-  https://medium.com/appseed-io/integrating-firebase-password-and-google-authentication-into-your-ionic-3-app-2421cee32db9
-  https://github.com/appseed-io/ionic3-firebase-auth
-
+/**
+* Handles Firebase Authentication, including sign in and sign out.
+*
+*
+* This code has been adapted from following tutorial and git repo, with significant changes:
+*  - https://medium.com/appseed-io/integrating-firebase-password-and-google-authentication-into-your-ionic-3-app-2421cee32db9
+*  - https://github.com/appseed-io/ionic3-firebase-auth
 */
 @Injectable()
 export class AfAuthProvider {
@@ -22,36 +20,52 @@ export class AfAuthProvider {
   // inject the AngularFireAuth class
   constructor(private afAuth: AngularFireAuth) {
     // set up the user
-    afAuth.authState.subscribe(user=> {
+    afAuth.authState.subscribe(user => {
       this.user = user;
     })
   }
 
-  // returns true if user is authenticated
+  /**
+  * This function returns true if user is authenticated
+  *
+  * @returns boolean, true if user is authenticated via firebase
+  */
   get authenticated(): boolean {
-		return this.user !== null;
-	}
+    return this.user !== null;
+  }
 
-  // return the current user object and email
-	getEmail() {
-		return this.user && this.user.email;
-	}
+  /**
+  * This function return the current user object and email
+  *
+  * @returns return the current user object and email
+  */
+  getEmail() {
+    return this.user && this.user.email;
+  }
 
-  // sign in method
-	signInWithEmail(credentials) {
-		console.log('Sign in with email');
-		return this.afAuth.auth.signInWithEmailAndPassword(credentials.email,
-			credentials.password);
-	}
+  /**
+  * This function tries to sign in via firebase authentication
+  *
+  * @returns return a promise, used in login.ts
+  */
+  signInWithEmail(credentials) {
+    return this.afAuth.auth.signInWithEmailAndPassword(credentials.email,
+      credentials.password);
+  }
 
-  // sign up new user method
-	signUp(credentials) {
-		return this.afAuth.auth.createUserWithEmailAndPassword(credentials.email, credentials.password);
-	}
+  /**
+   * This function signs out the current user via firebase authentication
+   *
+   * @returns return a promise, used in home.ts
+   */
+  signOut(): Promise<void> {
+    return this.afAuth.auth.signOut();
+  }
 
-  // sign out method
-	signOut(): Promise<void> {
-		return this.afAuth.auth.signOut();
-	}
+  // // sign up new user method - functionality disabled currently
+  // signUp(credentials) {
+  // 	return this.afAuth.auth.createUserWithEmailAndPassword(credentials.email, credentials.password);
+  // }
+
 
 }

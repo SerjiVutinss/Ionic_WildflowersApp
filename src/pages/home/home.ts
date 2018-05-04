@@ -9,7 +9,7 @@ import { LoginPage } from '../login/login';
 })
 export class HomePage {
 
-  // injecting AlertController and AngularFireAuth provider
+  // injecting AlertController, Menu Controller and AngularFireAuth provider
   constructor(
     private navCtrl: NavController,
     private alertCtrl: AlertController,
@@ -26,19 +26,20 @@ export class HomePage {
     this.navCtrl.push(LoginPage);
   }
 
+  // show/hide the menu
   toggleMenu() {
     this.menu.toggle;
   }
 
-  // sign out the current user and reload the home page
+  // sign out the current user
   logout() {
     this.afAuthService.signOut();
 
+    //// I have disabled this due to an issue with the menu
     //this.navCtrl.setRoot(HomePage);
   }
 
   // used for testing if a user is authenticated
-  // TODO: wil be expanded upon and reused later
   openUserPage() {
     if (this.isAuthenticated()) {
       // only navigate here if a user is logged in
@@ -58,19 +59,9 @@ export class HomePage {
     this.navCtrl.push("WildflowersPage");
   }
 
+  // page used for testing and debugging features
   openTestPage() {
-    //if (this.isAuthenticated()) {
-    // only navigate here if a user is logged in
     this.navCtrl.push("TestPage");
-    // } else {
-    //   // otherwise, display an alert
-    //   let alert = this.alertCtrl.create({
-    //     title: 'Access denied!',
-    //     subTitle: 'You must be logged in!',
-    //     buttons: ['OK']
-    //   });
-    //   alert.present();
-    // }
   }
 
   // return true if a user is logged in

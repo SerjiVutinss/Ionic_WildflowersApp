@@ -1,10 +1,11 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 /**
- * Generated class for the SummaryPipe pipe.
- *
- * See https://angular.io/api/core/Pipe for more info on Angular Pipes.
- */
+* Takes a string value and returns a shortened version, terminated with '...'
+*
+* @param limit trim the origina value to this number of characters,
+* then append '...'
+*/
 @Pipe({
   name: 'summary',
 })

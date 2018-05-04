@@ -5,7 +5,9 @@ import { NavController, AlertController, IonicPage } from "ionic-angular";
 import { HomePage } from '../../pages/home/home';
 import { LoginPage } from '../../pages/login/login';
 
-
+/**
+*  Header component, could not get this to behave correctly so disabling
+*/
 @IonicPage()
 @Component({
     selector: 'header-component',

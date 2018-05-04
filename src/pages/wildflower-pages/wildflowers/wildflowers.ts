@@ -11,12 +11,12 @@ import { AfAuthProvider } from '../../../providers/af-auth/af-auth';
 //import { ThumbnailPipe } from '../../pipes/thumbnail/thumbnail';
 
 /**
- * Generated class for the WildflowersPage page.
+ * This page displays either a list or grid of wildflower objects,
+ * depending on classs variables (which can be based on user preferences)
  *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
  */
 
+// TODO: maybe implement this enum for sort type?
 // enum SortType {
 //   CommonNameAsc,
 //   CommonNameDesc,
@@ -53,7 +53,7 @@ export class WildflowersPage {
 
   // Maximum number of elements per grid row, this is passed into the 
   // WildflowerSortFilterProvider functions
-  private gridWidth: number = 1;
+  private gridWidth: number = 3;
 
 
   // The string variable used by the search bar
@@ -77,7 +77,7 @@ export class WildflowersPage {
     private storage: Storage, // needed to retrieve user preferences
     private afAuth: AfAuthProvider // needed to get the logged in user's email
   ) {
-    
+
     // Assign all returned firebase results to the allWildflowers array
     this.wildflowerService.getAll().subscribe(
       wildflowers => {
@@ -85,8 +85,16 @@ export class WildflowersPage {
           null, // TODO: handle error
           // finally assign the results to the class array
           this.wildflowers = this.allWildflowers;
-        // and the get the current logged in user's preferences from Storage
-        this.getUserDetails();
+        // if a user is logged in, try to get preferences from Storage
+        if (this.afAuth.authenticated) {
+          this.getUserDetails();
+        } else {
+          // all details retrieved, now sort the item array,
+          // defaulting sort to Common Name ascending
+          this.sortByCommonName();
+          // and build the gridMatrix
+          this.setupGrid();
+        }
       });
   }
 
@@ -94,15 +102,15 @@ export class WildflowersPage {
   // Begin Section: Initialisation
 
   /**
-  * This function handles getting the currently logged in user's details from Storage
+  * This function handles getting the currently logged in user's details from Storage,
+  * it is only called if a user is actually logged in - i.e. afAuth.authenticated=true
   * 
   * Notes: Sets the default view type according to user setting - defaults to CardView
   */
   getUserDetails() {
     // create a new User object
-    this.user = new User();
+    this.user = new User(this.afAuth.getEmail());
     // set the User object's email attribute to the logged in Firebase user's email
-    this.user.email = this.afAuth.getEmail();
 
     // asynchrously get the User's data from Storage if it exists
     this.storage.get

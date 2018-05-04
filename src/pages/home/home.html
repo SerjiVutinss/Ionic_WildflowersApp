@@ -1,3 +1,4 @@
+<!-- Header -->
 <ion-header>
   <ion-toolbar>
     <button ion-button menuToggle right>
@@ -6,37 +7,32 @@
     <ion-title>
       Wildflowers of Ireland
     </ion-title>
-    <!-- <ion-buttons end>
-    
-    
-    
-        </ion-buttons> -->
   </ion-toolbar>
 
   <ion-nav #mycontent [root]="rootPage"></ion-nav>
-
-
+  <!-- Disabling Header Component due to unexpected behaviour -->
   <!-- <header-component></header-component> -->
 </ion-header>
+<!-- End Header -->
 
+<!-- Content -->
 <ion-content padding>
-  <button (click)="openUserPage()">User Profile</button>
-  <button (click)="openTestPage()">Test</button>
-  <!-- <button ion-button block menuToggle>Toggle Menu</button> -->
+  <!-- <button (click)="openUserPage()">User Profile</button>
+  <button (click)="openTestPage()">Test</button> -->
 
   <img src="http://i.imgur.com/xewNJAH.jpg">
   <ion-grid>
     <ion-col sm-2></ion-col>
     <ion-col sm-8>
-      <button id="button-wildflowers" (click)="openWildflowersPage()" ion-button large outline round>View Wildflowers</button>
+      <button id="button-wildflowers" (click)="openWildflowersPage()" ion-button large block color="secondary">View Wildflowers</button>
     </ion-col>
     <ion-col sm-2></ion-col>
   </ion-grid>
 
-  <!-- <page-wildflowers></page-wildflowers> -->
-
 </ion-content>
+<!-- End Content -->
 
+<!-- Menu  -->
 <ion-menu [content]="mycontent">
   <ion-content>
     <ion-list>
@@ -47,7 +43,6 @@
       <ion-item (click)="openUserPage()">
         <ion-icon name="contact" item-left></ion-icon>User Settings
       </ion-item>
-
 
       <ion-item (click)="logout()" *ngIf="afAuthService.authenticated">
         Log out
@@ -60,3 +55,4 @@
     </ion-list>
   </ion-content>
 </ion-menu>
+<!-- End Menu -->

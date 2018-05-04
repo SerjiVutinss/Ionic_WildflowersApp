@@ -3,13 +3,8 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
-
-import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
-import { LoginPage } from '../pages/login/login';
-
-
 import { BrowserTab } from '@ionic-native/browser-tab';
+import { MyApp } from './app.component';
 
 // Storage
 import { IonicStorageModule } from '@ionic/storage';
@@ -23,18 +18,20 @@ import { firebaseConfig } from '../firebase-config';
 // Custom AngularFire Authentication Provider
 import { AfAuthProvider } from '../providers/af-auth/af-auth';
 // AngularFire Database Module and Provider
-import { AngularFireDatabaseModule, AngularFireDatabase } from "angularfire2/database";
-// Custom Providers for AngularFire/Firebase data
+import { AngularFireDatabaseModule } from "angularfire2/database";
+// Custom Providers for AngularFire/Firebase data, and sorting
 import { WildflowersProvider, WildflowerImagesProvider, WildflowerSortFilterProvider } from '../providers/wildflowers';
 
-//import { HeaderComponent } from '../components/header/header';
+//import { HeaderComponent } from '../components/header/header'; // could not get this to behave correctly - disabling
 
-// Wildflower pages
-//import { WildflowersPage, WildflowerCardPage, WildflowerDetailPage } from '../pages/wildflower-pages';
+// Pages
+import { HomePage } from '../pages/home/home';
+import { LoginPage } from '../pages/login/login';
+// Wildflower Pages
 import { WildflowersPageModule } from '../pages/wildflower-pages/wildflowers/wildflowers.module';
 import { WildflowerDetailPageModule } from '../pages/wildflower-pages/wildflower-detail/wildflower-detail.module';
 
-import { HeaderModule} from '../components/header/header.module';
+//import { HeaderModule} from '../components/header/header.module';
 
 @NgModule({
   declarations: [
@@ -53,10 +50,10 @@ import { HeaderModule} from '../components/header/header.module';
     }),
     WildflowersPageModule,
     WildflowerDetailPageModule,
-    HeaderModule
+    //HeaderModule
   ],
   exports: [
-    HeaderModule
+    //HeaderModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

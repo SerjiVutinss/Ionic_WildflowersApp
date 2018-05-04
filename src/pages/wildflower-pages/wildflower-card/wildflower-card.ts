@@ -4,13 +4,10 @@ import { WildflowerImage, Wildflower } from '../models';
 import { WildflowerImagesProvider } from '../../../providers/wildflowers';
 
 /**
- * Generated class for the WildflowerCardPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
+ * Displays a single Wildflower object in a card format which also displays the default image
  */
 
-//@IonicPage()
+//@IonicPage() // not a page - just a component
 @Component({
   selector: 'page-wildflower-card',
   templateUrl: 'wildflower-card.html',
@@ -18,12 +15,12 @@ import { WildflowerImagesProvider } from '../../../providers/wildflowers';
 export class WildflowerCardPage {
 
   @Input()
-  wildflower: Wildflower;
+  wildflower: Wildflower; // passed in from wildflowers.html via attribute directive
 
-  private wildflowerImages: WildflowerImage[];
-  private defaultImage: WildflowerImage;
+  private wildflowerImages: WildflowerImage[]; // all images related to this wildflower instance
+  private defaultImage: WildflowerImage; // the first image in the wildflowerImages array, the image shown on each card
 
-  private popoverIsActive: boolean;
+  //private popoverIsActive: boolean; // 
 
 
   constructor(
@@ -34,11 +31,12 @@ export class WildflowerCardPage {
   }
 
   ngOnInit() {
+    // get the image links for this wildflower via Firebase
     this.wildflowerImageService.get(this.wildflower.scientificName)
       .subscribe(images => {
-        this.wildflowerImages = images,
+        this.wildflowerImages = images, // assign the images
           null,
-          this.defaultImage = this.wildflowerImages[0]
+          this.defaultImage = this.wildflowerImages[0] // and assign the default image
       });
   }
 
@@ -46,17 +44,22 @@ export class WildflowerCardPage {
     console.log('ionViewDidLoad WildflowerCardPage');
   }
 
+  /**
+  * Opens the WildflowerDetailPage with the wildflower object
+  * @param flower the wildflower object which is passed to the detail page as a parameter
+  *
+  */
   gotoDetail(flower: Wildflower) {
     this.navCtrl.push("WildflowerDetailPage", {
       wildflower: flower
     });
   }
 
-  onPopoverShown() {
-    this.popoverIsActive = true;
-  }
-  onPopoverHidden() {
-    this.popoverIsActive = false;
-  }
+  // onPopoverShown() {
+  //   this.popoverIsActive = true;
+  // }
+  // onPopoverHidden() {
+  //   this.popoverIsActive = false;
+  // }
 
 }
