@@ -1,5 +1,7 @@
 # MobileAppProject_10023036
 
+Wildflowers of Ireland - Ionic application which displays information about various native Irish wildflowers.  Data is fetched from Firebase database which also contains links to images hosted on imgur.com
+
 ## Installation
 
 1. Clone this repo and `cd` into it.
